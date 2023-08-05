@@ -1,0 +1,25 @@
+version: '3.3'
+
+services:
+  db:
+    image: mysql:latest
+    container_name: mysql_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: '123'
+      MYSQL_DATABASE: 'mydatabase'
+      MYSQL_USER: 'akshit'
+      MYSQL_PASSWORD: '123'
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./create_users_table.sql:/docker-entrypoint-initdb.d/create_users_table.sql
+    ports:
+      - "3306:3306"
+  web:
+    build: .
+    ports:
+      - "1122:80"
+
+volumes:
+  db_data:
+
